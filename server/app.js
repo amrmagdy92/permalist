@@ -14,6 +14,9 @@ import dotenv from "dotenv"
 import bodyParser from "body-parser"
 import compress from "compression"
 
+// Database connector
+import client from "../helper/db.helper"
+
 // Routers
 import listItemRouter from "./routers/listitem.router"
 
@@ -59,6 +62,11 @@ app.use(configuredCors)
 app.use(configuredRateLimiter)
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
+
+// Database connection
+client.connect()
+    .then(() => console.log("Database connection was initiated successfully"))
+    .catch( err => console.log(err))
 
 app.get('/', (req, res) => {
     res.send("index.html")
