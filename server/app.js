@@ -15,6 +15,7 @@ import bodyParser from "body-parser"
 import compress from "compression"
 
 // Routers
+import listItemRouter from "./routers/listitem.router"
 
 // app configuration
 dotenv.config()
@@ -64,6 +65,7 @@ app.get('/', (req, res) => {
 })
 
 // Routes
+app.use("/api/v1/listItems", listItemRouter)
 
 // Export
 export default app
