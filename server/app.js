@@ -15,7 +15,7 @@ import bodyParser from "body-parser"
 import compress from "compression"
 
 // Database connector
-import client from "../helper/db.helper"
+import client from "./helper/db.helper"
 
 // Routers
 import listItemRouter from "./routers/listitem.router"
