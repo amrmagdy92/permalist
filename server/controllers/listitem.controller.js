@@ -1,4 +1,4 @@
-import pg from "pg"
+import client from "../helper/db.helper"
 
 const createListItem = () => {
     return new Promise((resolve, reject) => {})
