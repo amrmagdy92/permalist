@@ -1,11 +1,8 @@
-import pg from "pg"
+import { Sequelize } from "sequelize"
 
-const client = new pg.Client({
-    user: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD,
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORTNUMBER,
-	database: process.env.DB_DATABASE
+const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+	dialect: process.env.DB_DIALECT,
+	host: process.env.DB_HOST
 })
 
-export default client
+export default sequelize
