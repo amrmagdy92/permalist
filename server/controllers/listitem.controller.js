@@ -148,8 +148,39 @@ const updateListItem = (itemID, itemData) => {
         }
     })
 }
-const deleteListItem = () => {
-    return new Promise((resolve, reject) => {})
+const deleteListItem = (itemID) => {
+    return new Promise((resolve, reject) => {
+        let validationErrors = validateItemID(itemID)
+        if (Object.keys(validationErrors).length > 0) {
+            reject({
+                code: 400,
+                msg: validationErrors
+            })
+        } else {
+            prisma.listitem.delete({
+                where: {
+                    id: itemID
+                }
+            })
+            .then( result => {
+                result ?
+                resolve({
+                    code: 200,
+                    msg: "Item has been deleted successfully"
+                }) :
+                resolve({
+                    code: 200,
+                    msg: "Please provide a valid item ID"
+                })
+            })
+            .catch( err => {
+                reject({
+                    code: 500,
+                    msg: err
+                })
+            })
+        }
+    })
 }
 
 export {

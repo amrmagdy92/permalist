@@ -59,9 +59,17 @@ router.route("/:id")
             })
     })
     .delete((request, response) => {
-        deleteListItem()
-            .then()
-            .catch()
+        deleteListItem(request.params.id)
+            .then( result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
+            .catch(result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
     })
 
 export default router
