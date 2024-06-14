@@ -1,3 +1,5 @@
+import uuidValidator from "uuid-validate"
+
 const validateStatusFilter = (filter) => {
     let errors = {}
     const validItemStatus = ["to_do", "in_progress", "done"]
@@ -13,7 +15,14 @@ const validateListItem = (listItemData) => {
     return errors
 }
 
+const validateItemID = (listItemID) => {
+    let errors = {}
+    !uuidValidator(listItemID)? errors.item_id = "Invalid item ID": null
+    return errors
+}
+
 export {
     validateListItem,
-    validateStatusFilter
+    validateStatusFilter,
+    validateItemID
 }
