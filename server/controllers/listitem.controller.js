@@ -97,8 +97,56 @@ const readListItem = (itemID) => {
         }
     })
 }
-const updateListItem = () => {
-    return new Promise((resolve, reject) => {})
+const updateListItem = (itemID, itemData) => {
+    return new Promise((resolve, reject) => {
+        let validationErrors
+        const itemIDValidation = validateItemID(itemID)
+        if (Object.keys(itemIDValidation).length > 0) {
+            validationErrors = itemIDValidation
+            reject({
+                code: 400,
+                msg: validationErrors
+            })
+        } else {
+            const itemValidation = validateListItem({
+                item_text: itemData.item_text,
+                status: itemData.status
+            })
+            if (Object.keys(itemValidation).length > 0) {
+                reject({
+                    code: 400,
+                    msg: "Invalid item data"
+                })
+            } else {
+                prisma.listitem.update({
+                    where: {
+                        id: itemID
+                    },
+                    data: {
+                        item_text: itemData.item_text,
+                        status: itemData.status
+                    }
+                })
+                .then( result => {
+                    result ?
+                    resolve({
+                        code: 200,
+                        msg: result
+                    }) :
+                    resolve({
+                        code: 200,
+                        msg: "Please provide a valid item ID"
+                    })
+                })
+                .catch( err => {
+                    reject({
+                        code: 500,
+                        msg: err
+                    })
+                })
+            }
+        }
+    })
 }
 const deleteListItem = () => {
     return new Promise((resolve, reject) => {})

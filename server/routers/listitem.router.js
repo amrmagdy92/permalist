@@ -46,9 +46,17 @@ router.route("/:id")
             })
     })
     .put((request, response) => {
-        updateListItem()
-            .then()
-            .catch()
+        updateListItem(request.params.id, request.body.list_item)
+            .then( result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
+            .catch(result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
     })
     .delete((request, response) => {
         deleteListItem()
