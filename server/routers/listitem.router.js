@@ -45,7 +45,7 @@ router.route("/:id")
                 })
             })
     })
-    .patch((request, response) => {
+    .put((request, response) => {
         updateListItem()
             .then()
             .catch()
