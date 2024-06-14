@@ -20,7 +20,6 @@ const createListItem = (itemData) => {
                 })
             })
             .catch( err => {
-                console.log(err)
                 reject({
                     code: 500,
                     msg: err
