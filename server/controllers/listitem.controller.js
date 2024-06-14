@@ -1,5 +1,5 @@
 import prisma from "../helper/db.helper"
-import { validateListItem } from "../validators/listitem.validator"
+import { validateListItem, validateStatusFilter } from "../validators/listitem.validator"
 
 const createListItem = (itemData) => {
     return new Promise((resolve, reject) => {
@@ -29,8 +29,40 @@ const createListItem = (itemData) => {
         }
     })
 }
-const getListItems = () => {
-    return new Promise((resolve, reject) => {})
+const getListItems = (statusFilter) => {
+    return new Promise((resolve, reject) => {
+        let validationErrors
+        statusFilter === "" || statusFilter === undefined? validationErrors = {} : validationErrors = validateStatusFilter(statusFilter)
+        if (Object.keys(validationErrors).length > 0) {
+            reject({
+                code: 400,
+                msg: validationErrors
+            })
+        } else {
+            prisma.listitem.findMany({
+                where:{
+                    status: statusFilter
+                }
+            })
+            .then( results => {
+                results.length > 0 ?
+                resolve({
+                    code: 200,
+                    msg: results
+                }) :
+                resolve({
+                    code: 200,
+                    msg: "No results were found under this filter."
+                })
+            })
+            .catch( err => {
+                reject({
+                    code: 500,
+                    msg: err
+                })
+            })
+        }
+    })
 }
 const readListItem = () => {
     return new Promise((resolve, reject) => {})

@@ -5,9 +5,17 @@ const router = Router()
 
 router.route("/")
     .get((request, response) => {
-        getListItems()
-            .then()
-            .catch()
+        getListItems(request.query.status_filter)
+        .then( result => {
+            response.status(result.code).json({
+                response: result.msg
+            })
+        })
+        .catch(result => {
+            response.status(result.code).json({
+                response: result.msg
+            })
+        })
     })
     .post((request, response) => {
         createListItem(request.body.list_item)
