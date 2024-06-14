@@ -33,9 +33,17 @@ router.route("/")
 
 router.route("/:id")
     .get((request, response) => {
-        readListItem()
-            .then()
-            .catch()
+        readListItem(request.params.id)
+            .then( result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
+            .catch(result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
+            })
     })
     .patch((request, response) => {
         updateListItem()
