@@ -6,24 +6,28 @@ const router = Router()
 router.route("/")
     .get((request, response) => {
         getListItems(request.query.status_filter)
-        .then( result => {
-            response.status(result.code).json({
-                response: result.msg
+            .then( result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
             })
-        })
-        .catch(result => {
-            response.status(result.code).json({
-                response: result.msg
+            .catch(result => {
+                response.status(result.code).json({
+                    response: result.msg
+                })
             })
-        })
     })
     .post((request, response) => {
         createListItem(request.body.list_item)
             .then( result => {
-                response.status(result.code).json(result.msg)
+                response.status(result.code).json({
+                    response: result.msg
+                })
             })
             .catch(result => {
-                response.status(result.code).json(result.msg)
+                response.status(result.code).json({
+                    response: result.msg
+                })
             })
     })
 
