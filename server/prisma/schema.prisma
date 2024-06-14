@@ -16,7 +16,7 @@ datasource db {
 model listitem{
   id        String @id @default(uuid())
   item_text String
-  status    item_status
+  status    item_status @default(to_do)
 }
 
 enum item_status {
