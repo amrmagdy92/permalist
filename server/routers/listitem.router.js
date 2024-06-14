@@ -10,9 +10,13 @@ router.route("/")
             .catch()
     })
     .post((request, response) => {
-        createListItem()
-            .then()
-            .catch()
+        createListItem(request.body.list_item)
+            .then( result => {
+                response.status(result.code).json(result.msg)
+            })
+            .catch(result => {
+                response.status(result.code).json(result.msg)
+            })
     })
 
 router.route("/:id")
